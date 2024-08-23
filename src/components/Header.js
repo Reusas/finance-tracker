@@ -14,6 +14,9 @@ export default function Header()
               <li className="text-white hover:text-gray-300">
                 <Link href="/settings">Settings</Link>
               </li>
+              <li className="text-white hover:text-gray-300">
+                <Link href="/signin">Sign in</Link>
+              </li>
             </ul>
           </nav>
         </header>
