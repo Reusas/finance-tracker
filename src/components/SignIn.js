@@ -1,11 +1,16 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+
 
 export default function Signin()
 {
     // Initialize values
     const[email,setEmail] = useState('');
     const[password,setPassword] = useState('');
+    const[loginSucessful,setLoginSuccesful] = useState('');
+    const router = useRouter();
 
 
     const handleSubmit = async(e) =>
@@ -31,11 +36,12 @@ export default function Signin()
 
         if(response.ok)
         {
-            console.log("Login succesful");
+            window.location.href = '/dashboard';
         }
         else
         {
-            console.error("Login failed");
+            setLoginSuccesful("Login failed. Invalid details.");
+
         }
     };
 
@@ -55,6 +61,9 @@ export default function Signin()
                 </label>
                 <input type="submit" className=" w-full p-2  border mt-5 bg-green-400 hover:bg-green-600"/>
             </form>
+            {loginSucessful && (
+                <p>Failed to login. Invalid username or password</p>
+            )}
             </div>
         </div>
     );
