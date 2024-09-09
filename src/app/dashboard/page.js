@@ -19,10 +19,10 @@ export default async function Page() {
     try {
         const decodedToken = jwt.verify(token, 'secretKey');
         console.log("Token is valid:", decodedToken);
-        const transactionResponse = await fetch('/api/getTransactions');
+        const transactionResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getTransactions');
         const transactionData = await transactionResponse.json();
         
-        const goalResponse = await fetch('/api/getGoals')
+        const goalResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getGoals');
         const goalData = await goalResponse.json();
 
         return (
