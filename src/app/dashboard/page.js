@@ -1,5 +1,3 @@
-
-
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import Dashboard from '@/components/Dashboard';
@@ -21,10 +19,10 @@ export default async function Page() {
     try {
         const decodedToken = jwt.verify(token, 'secretKey');
         console.log("Token is valid:", decodedToken);
-        const transactionResponse = await fetch('http://localhost:3000/api/getTransactions');
+        const transactionResponse = await fetch('/api/getTransactions');
         const transactionData = await transactionResponse.json();
         
-        const goalResponse = await fetch('http://localhost:3000/api/getGoals')
+        const goalResponse = await fetch('/api/getGoals')
         const goalData = await goalResponse.json();
 
         return (
