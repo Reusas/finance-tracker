@@ -1,17 +1,17 @@
+
+
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import SummaryCard from "@/components/SummaryCard";
+import Dashboard from '@/components/Dashboard';
+import Header from '@/components/Header';
 
-export const dynamic = 'force-dynamic';  // Ensure dynamic rendering
-export const revalidate = 0; // Disable any static regeneration
 
-export default function Dashboard() {
+export default async function Page() {
     // Retrieve the token from cookies
     const cookieStore = cookies();
     const token = cookieStore.get('token')?.value;
     
-    // This console.log should appear every time the page is accessed
-    console.log("Test");
+
 
     if (!token) {
         console.log("Token does not exist");
@@ -21,25 +21,18 @@ export default function Dashboard() {
     try {
         const decodedToken = jwt.verify(token, 'secretKey');
         console.log("Token is valid:", decodedToken);
+        const transactionResponse = await fetch('http://localhost:3000/api/getTransactions');
+        const transactionData = await transactionResponse.json();
+        
+        const goalResponse = await fetch('http://localhost:3000/api/getGoals')
+        const goalData = await goalResponse.json();
 
-        // Render your dashboard content here
         return (
-            <div className='flex justify-center items-start min-h-screen space-x-4'>
-            <SummaryCard
-            title="Income"
-            content="5000 income...."
-            />
-            <SummaryCard
-            title="Expenses"
-            content="899 spent...."
-            />
-            <SummaryCard
-            title="Balance"
-            content="4101 remaining"
-            />
-            </div>
-            
+
+        <Dashboard tData={transactionData} gData = {goalData}/>
+        
         );
+
 
 
 
@@ -48,3 +41,4 @@ export default function Dashboard() {
         return <p className="text-center text-3xl">Token expired or is invalid. Please log in again.</p>;
     }
 }
+

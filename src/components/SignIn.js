@@ -1,5 +1,4 @@
 "use client"
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
@@ -10,15 +9,12 @@ export default function Signin()
     const[email,setEmail] = useState('');
     const[password,setPassword] = useState('');
     const[loginSucessful,setLoginSuccesful] = useState('');
-    const router = useRouter();
 
 
     const handleSubmit = async(e) =>
     {
         e.preventDefault(); // Stop page from reloading
 
-        console.log(email);
-        console.log(password);
 
 
         // Turn email and pass to json and send to api
@@ -46,6 +42,7 @@ export default function Signin()
     };
 
     return(
+        
         <div className="grid grid-rows-2 gap-3 justify-center items-center">
             <p></p>
             <h1 className='text-center text-3xl font-extrabold'>Sign in to Reus Finance Tracker</h1>

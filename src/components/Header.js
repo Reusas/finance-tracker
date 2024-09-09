@@ -1,5 +1,10 @@
 import Link from 'next/link';
-export default function Header()
+
+
+
+
+
+export default function Header({isLoggedIn})
 {
     return (
         <header className="bg-gray-800 p-9">
@@ -14,9 +19,17 @@ export default function Header()
               <li className="text-white hover:text-gray-300">
                 <Link href="/settings">Settings</Link>
               </li>
+              {!isLoggedIn ?
               <li className="text-white hover:text-gray-300">
                 <Link href="/signin">Sign in</Link>
               </li>
+              :
+              <li className="text-white hover:text-gray-300">
+                <Link href="/signin">Sign out</Link>
+              </li>
+
+              }
+              
             </ul>
           </nav>
         </header>
