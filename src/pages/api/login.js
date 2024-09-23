@@ -8,11 +8,14 @@ export default async function handler(req,res)
     {
         const {email,password} = req.body;
         var dbPassword = '';
+        var userID =0;
 
         try
         {
-            const result = await pool.query("SELECT password from users WHERE email=($1);", [email]);
+            const result = await pool.query("SELECT password, id from users WHERE email=($1);", [email]);
             dbPassword = result.rows[0].password;
+            userID = result.rows[0].id;
+            console.log(userID);
         }
         catch(error)
         {
@@ -32,7 +35,7 @@ export default async function handler(req,res)
             }
 
             if(isMatch){
-                const token = jwt.sign({email:email}, 'secretKey',{expiresIn: '1h' });
+                const token = jwt.sign({userID:userID}, 'secretKey',{expiresIn: '1h' });
 
                 const cookie = serialize('token',token,{
                     httpOnly: true,

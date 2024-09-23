@@ -18,16 +18,31 @@ export default async function Page() {
 
     try {
         const decodedToken = jwt.verify(token, 'secretKey');
+        const thisUserID = decodedToken.userID;
         console.log("Token is valid:", decodedToken);
         const transactionResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getTransactions');
         const transactionData = await transactionResponse.json();
-        
+
+        const tResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getTransactions',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({thisUserID}),
+        });
+
+        const tData = await tResponse.json();
+
+        console.log(tData);
+
+
         const goalResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getGoals');
         const goalData = await goalResponse.json();
 
         return (
 
-        <Dashboard tData={transactionData} gData = {goalData}/>
+        <Dashboard tData={transactionData} gData = {goalData} userID={decodedToken.userID}/>
         
         );
 

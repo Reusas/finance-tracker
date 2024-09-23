@@ -5,7 +5,7 @@ import SummaryCard from "./SummaryCard"
 import FinanceForm from "./FinanceForm";
 import GoalForm from "./GoalForm";
 import {useEffect, useState} from 'react'
-export default function Dashboard( {tData, gData} )
+export default function Dashboard( {tData, gData, userID} )
 {
 
     const [transactionFormActive, setTransactionFormActive] = useState(false);
@@ -87,7 +87,7 @@ export default function Dashboard( {tData, gData} )
                 <p key={item.id}>{item.date} - {item.amount}$ - {item.type} - {item.category}</p>
             ))}
         </li>
-        {transactionFormActive && <FinanceForm onClose={handleClick}/>}
+        {transactionFormActive && <FinanceForm onClose={handleClick} userID={userID}/>}
         <div className='flex justify-center p-2 '>
         <p className='text-center font-bold ml-16'>Financial goals:</p>
         <button className='justify-center bg-green-400 border ml-10 w-10' onClick={handleClickGoal}>+</button>

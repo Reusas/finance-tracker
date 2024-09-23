@@ -8,7 +8,7 @@ function submit(data)
 }
 
 
-export default  function FinanceForm( {onClose})
+export default  function FinanceForm( {onClose, userID})
 {
     const [date,setDate] = useState('');
     const [amount,setAmount] = useState('');
@@ -25,7 +25,7 @@ export default  function FinanceForm( {onClose})
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({date,amount,type,category})
+          body: JSON.stringify({userID,date,amount,type,category})
         });
 
         if(response.ok)

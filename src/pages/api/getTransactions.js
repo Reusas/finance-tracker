@@ -1,15 +1,24 @@
+import pool from '@/lib/db';
 export default async function handler(req,res)
 {
 
-        // Get from database here later
-        const transactionData = 
-        [
-            {id: 1, date: "08/27/2024", amount: "100", type: "expense", category: "Bills"},
-            {id: 2, date: "08/26/2024", amount: "10", type: "expense", category: "Food"},
-            {id: 3, date: "08/22/2024", amount: "1000", type: "income", category: "Other"},
-        ];
+        if(req.method == "POST")
+        {
+                const {userID} = req.body;
 
+                try
+                {
+                        const result = await pool.query("SELECT date,amount,type,category FROM transactions WHERE user_id = ($1);",[userID]);
+                        return res.status(200).json(result.rows); 
+                }
+                catch(err)
+                {
+                        return res.status(500).json({message: "Database error"});
+                }
 
-        return res.status(200).json(transactionData);
+        
+        }
+
+        
     
 }
