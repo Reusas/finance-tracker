@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import Dashboard from '@/components/Dashboard';
-import Header from '@/components/Header';
 
 
 export default async function Page() {
@@ -20,29 +19,47 @@ export default async function Page() {
         const decodedToken = jwt.verify(token, 'secretKey');
         const thisUserID = decodedToken.userID;
         console.log("Token is valid:", decodedToken);
-        const transactionResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getTransactions');
-        const transactionData = await transactionResponse.json();
 
-        const tResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getTransactions',
+
+        const tResponse = await fetch('http://localhost:3000/api/getTransactions',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({thisUserID}),
+            body: JSON.stringify({userID: thisUserID}),
         });
 
         const tData = await tResponse.json();
 
-        console.log(tData);
+        const getExpenses = await fetch('http://localhost:3000/api/getTransactionSum', // Replace with url to web api
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userID: thisUserID, type:'Expense'}),
+        });
 
+        const expenseData = await getExpenses.json();
 
-        const goalResponse = await fetch('https://finance-tracker-seven-inky.vercel.app/api/getGoals');
-        const goalData = await goalResponse.json();
+        console.log(expenseData);
+
+        const getIncome = await fetch('http://localhost:3000/api/getTransactionSum', // Replace with production URL
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userID: thisUserID, type:'Income'}),
+        });
+
+        const incomeData = await getIncome.json();
+
 
         return (
 
-        <Dashboard tData={transactionData} gData = {goalData} userID={decodedToken.userID}/>
+        <Dashboard tData={tData} expenseData = {expenseData} incomeData= {incomeData} userID={decodedToken.userID}/>
         
         );
 

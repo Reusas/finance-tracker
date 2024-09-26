@@ -6,9 +6,11 @@ export default async function handler(req,res)
         {
                 const {userID} = req.body;
 
+                
+
                 try
                 {
-                        const result = await pool.query("SELECT date,amount,type,category FROM transactions WHERE user_id = ($1);",[userID]);
+                        const result = await pool.query('SELECT id,date,amount,type,category FROM transactions WHERE user_id = ($1);',[userID]);
                         return res.status(200).json(result.rows); 
                 }
                 catch(err)

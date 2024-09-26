@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer'
 import './globals.css'
 
-import React, {useState} from 'react';
+
 
 
 export default function RootLayout({ children }) {

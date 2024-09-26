@@ -3,21 +3,14 @@
 
 import SummaryCard from "./SummaryCard"
 import FinanceForm from "./FinanceForm";
-import GoalForm from "./GoalForm";
 import {useEffect, useState} from 'react'
-export default function Dashboard( {tData, gData, userID} )
+export default function Dashboard( {tData,expenseData,incomeData, userID} )
 {
 
     const [transactionFormActive, setTransactionFormActive] = useState(false);
-    const [goalFormActive, setGoalFormActive] = useState(false);
 
     const handleClick = () =>{
         setTransactionFormActive(!transactionFormActive);
-
-    }
-
-    const handleClickGoal = () =>{
-        setGoalFormActive(!goalFormActive);
 
     }
 
@@ -27,21 +20,17 @@ export default function Dashboard( {tData, gData, userID} )
     }
     ,[transactionFormActive]);
 
-    useEffect( ()=>
-    {
-        console.log(goalFormActive);
-    }
-    ,[goalFormActive]);
+
+
 
     const getTotalIncome = () =>
     {
         var totalIncome = 0;
-        for(const item of tData)
+        for(const item of incomeData)
         {
-            if(item.type == "income")
-            {
-                totalIncome += Number(item.amount);
-            }
+
+            totalIncome += Number(item.total_sum);
+            
         }
 
         return totalIncome;
@@ -50,12 +39,11 @@ export default function Dashboard( {tData, gData, userID} )
     const getTotalExpense = () =>
     {
         var totalExpense = 0;
-        for(const item of tData)
+        for(const item of expenseData)
         {
-            if(item.type == "expense")
-            {
-                totalExpense += Number(item.amount);
-            }
+
+            totalExpense += Number(item.total_sum);
+            
         }
 
         return totalExpense;
@@ -72,10 +60,12 @@ export default function Dashboard( {tData, gData, userID} )
         <SummaryCard
         title="Income"
         content={totalIncome}
+        tData = {incomeData}
         />
         <SummaryCard
         title="Expenses"
         content={totalExpense}
+        tData = {expenseData}
         />
         </div>
         <div className='flex justify-center p-2'>
@@ -88,16 +78,8 @@ export default function Dashboard( {tData, gData, userID} )
             ))}
         </li>
         {transactionFormActive && <FinanceForm onClose={handleClick} userID={userID}/>}
-        <div className='flex justify-center p-2 '>
-        <p className='text-center font-bold ml-16'>Financial goals:</p>
-        <button className='justify-center bg-green-400 border ml-10 w-10' onClick={handleClickGoal}>+</button>
-        </div>
-        <li className='flex flex-col justify-center items-center '>
-            {gData.map((item) => (
-                <p key={item.id}>{item.name} - {item.amount}</p>
-            ))}
-        </li>
-        {goalFormActive && <GoalForm onClose={handleClickGoal}/>}
+
+
 
         </div>
 
