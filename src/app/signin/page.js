@@ -3,6 +3,6 @@ export default function Home()
 {
 
     return(
-        <Signin isSignUp={false}/>
+        <Signin mode={0}/>
     );
 }

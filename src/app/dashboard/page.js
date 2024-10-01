@@ -21,7 +21,7 @@ export default async function Page() {
         console.log("Token is valid:", decodedToken);
 
 
-        const tResponse = await fetch('http://localhost:3000/api/getTransactions',
+        const tResponse = await fetch('https://finance-tracker-seven-inky.vercel.app//api/getTransactions',
         {
             method: 'POST',
             headers: {
@@ -32,7 +32,7 @@ export default async function Page() {
 
         const tData = await tResponse.json();
 
-        const getExpenses = await fetch('http://localhost:3000/api/getTransactionSum', // Replace with url to web api
+        const getExpenses = await fetch('https://finance-tracker-seven-inky.vercel.app//api/getTransactionSum', // Replace with url to web api
         {
             method: 'POST',
             headers: {
@@ -45,7 +45,7 @@ export default async function Page() {
 
         console.log(expenseData);
 
-        const getIncome = await fetch('http://localhost:3000/api/getTransactionSum', // Replace with production URL
+        const getIncome = await fetch('https://finance-tracker-seven-inky.vercel.app//api/getTransactionSum', // Replace with production URL
         {
             method: 'POST',
             headers: {

@@ -1,12 +1,11 @@
 import pool from '@/lib/db';
+
 export default async function handler(req,res)
 {
 
         if(req.method == "POST")
         {
                 const {userID} = req.body;
-
-                
 
                 try
                 {

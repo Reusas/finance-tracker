@@ -1,8 +1,8 @@
 import pool from '@/lib/db';
+
 export default async function handler(req,res)
 {
     const {userID,type} = req.body;
-
 
     try
     {
