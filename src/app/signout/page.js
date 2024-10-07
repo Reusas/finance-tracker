@@ -1,14 +1,17 @@
 'use client'
+import { useRouter } from 'next/navigation';
 export default function SignOut()
 {
+
+    const router = useRouter();
     const signOut = async () =>
     {
-        await fetch('https://finance-tracker-seven-inky.vercel.app/api/signout',{method: 'POST'});
+        await fetch('/api/signout',{method: 'POST'});
     }
 
     signOut();
 
-    window.location.href = '/';
+    router.push('/');
 
     return(
         <p> You have signed out</p>
