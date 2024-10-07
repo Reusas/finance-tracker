@@ -3,7 +3,7 @@ export default function SignOut()
 {
     const signOut = async () =>
     {
-        await fetch('/api/signout',{method: 'POST'});
+        await fetch('${window.location.origin}/api/signout',{method: 'POST'});
     }
 
     signOut();
