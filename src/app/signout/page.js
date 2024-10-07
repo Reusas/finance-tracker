@@ -3,7 +3,7 @@ export default function SignOut()
 {
     const signOut = async () =>
     {
-        await fetch('${window.location.origin}/api/signout',{method: 'POST'});
+        await fetch('https://finance-tracker-seven-inky.vercel.app/api/signout',{method: 'POST'});
     }
 
     signOut();
