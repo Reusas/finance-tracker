@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from 'next/link';
 
 
+
+
 // 0 for signin 1 for sign up 2 for change password
 export default function Signin({mode})
 {
@@ -12,6 +14,7 @@ export default function Signin({mode})
     const[confirmedPassword,setConfirmedPassword] = useState('');
     const[newPassword,setNewPassword] = useState('');
     const[loginSucessful,setLoginSuccesful] = useState('');
+
 
 
     const handleSubmit = async(e) =>

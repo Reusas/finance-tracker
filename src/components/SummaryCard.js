@@ -1,9 +1,10 @@
+'use client'
 import {Chart} from "chart.js/auto";
 import {useEffect, useRef} from 'react';
 
 export default function SummaryCard({title,content,tData})
 {
-
+    
     const canvasRef = useRef(null);
         
         useEffect(()=>{
@@ -34,7 +35,8 @@ export default function SummaryCard({title,content,tData})
             {
                 myChart.destroy();
             }
-        },[]);
+        },[tData]);
+
 
 
     

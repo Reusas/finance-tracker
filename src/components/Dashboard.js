@@ -4,14 +4,31 @@
 import SummaryCard from "./SummaryCard"
 import FinanceForm from "./FinanceForm";
 import {useEffect, useState} from 'react'
-export default function Dashboard( {tData,expenseData,incomeData, userID} )
+import { AuthContext } from "@/app/context/AuthContext";
+import { useContext } from "react";
+export default function Dashboard( {userID} )
 {
 
     const [transactionFormActive, setTransactionFormActive] = useState(false);
 
-    const handleClick = () =>{
-        setTransactionFormActive(!transactionFormActive);
+    const[TData,setTData] = useState([]);
+    const[expenseData,setExpenseData] = useState([]);
+    const[incomeData,setIncomeData] = useState([]);
 
+    const{setIsLoggedIn} = useContext(AuthContext);
+
+    setIsLoggedIn(true);
+
+
+    const handleClick = () =>{
+        setTransactionFormActive(true);
+
+    }
+
+    const handleClose = () =>{
+        
+        setTransactionFormActive(false);
+        fetchData();
     }
 
     useEffect( ()=>
@@ -20,6 +37,53 @@ export default function Dashboard( {tData,expenseData,incomeData, userID} )
     }
     ,[transactionFormActive]);
 
+
+    const fetchData = async () =>
+    {
+        console.log("How");
+        const tResponse = await fetch('/api/getTransactions',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userID: userID}),
+        });
+
+        const tData = await tResponse.json();
+        setTData(tData);
+
+        const getExpenses = await fetch('/api/getTransactionSum', // Replace with url to web api
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userID: userID, type:'Expense'}),
+        });
+
+        const eData = await getExpenses.json();
+
+        setExpenseData(eData)
+
+        const getIncome = await fetch('/api/getTransactionSum', // Replace with production URL
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({userID: userID, type:'Income'}),
+        });
+
+        const iData = await getIncome.json();
+        setIncomeData(iData);
+
+    }
+
+    useEffect(() =>{
+        
+        fetchData();
+    },[])
 
 
 
@@ -73,11 +137,11 @@ export default function Dashboard( {tData,expenseData,incomeData, userID} )
         <button className='justify-center bg-green-400 border ml-10 w-10' onClick={handleClick}>+</button>
         </div>
         <li className='flex flex-col justify-center items-center '>
-            {tData.map((item) => (
+            {TData.map((item) => (
                 <p key={item.id}>{item.date} - {item.amount}$ - {item.type} - {item.category}</p>
             ))}
         </li>
-        {transactionFormActive && <FinanceForm onClose={handleClick} userID={userID}/>}
+        {transactionFormActive && <FinanceForm onClose={handleClose} userID={userID}/>}
 
 
 

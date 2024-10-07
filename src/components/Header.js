@@ -1,11 +1,14 @@
 import Link from 'next/link';
+import { AuthContext,AuthProvider  } from '@/app/context/AuthContext';
+import { useContext } from 'react';
 
 
 
 
-
-export default function Header({isLoggedIn})
+export default function Header()
 {
+    const{isLoggedIn} = useContext(AuthContext);
+
     return (
         <header className="bg-gray-800 p-9">
           <nav>
@@ -25,7 +28,7 @@ export default function Header({isLoggedIn})
               </li>
               :
               <li className="text-white hover:text-gray-300">
-                <Link href="/signin">Sign out</Link>
+                <Link href="/signout">Sign out</Link>
               </li>
 
               }
